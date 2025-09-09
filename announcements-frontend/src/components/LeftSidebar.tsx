@@ -78,7 +78,7 @@ export default function LeftSidebar({ announcementsCount, onCreate, onCategories
             cursor: 'pointer',
             transition: 'all 0.2s ease'
           }}
-          onClick={onCreate}
+          onClick={onAllAnnouncements}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'translateY(-2px)';
             e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
@@ -112,13 +112,6 @@ export default function LeftSidebar({ announcementsCount, onCreate, onCategories
       {/* Additional Menu Items */}
       <div className="px-3">
         <div className="list-group list-group-flush">
-          <button 
-            className="list-group-item list-group-item-action border-0 bg-transparent d-flex align-items-center py-2"
-            onClick={onAllAnnouncements}
-          >
-            <i className="bi bi-list-ul me-2 text-secondary"></i>
-            <span>All Announcements</span>
-          </button>
           <button 
             className="list-group-item list-group-item-action border-0 bg-transparent d-flex align-items-center py-2"
             onClick={onCreate}

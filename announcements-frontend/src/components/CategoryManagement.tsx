@@ -104,27 +104,28 @@ export default function CategoryManagement({ onBack }: CategoryManagementProps) 
   }
 
   return (
-    <div className="container-fluid py-4">
-      <div className="row justify-content-center">
-        <div className="col-12 col-lg-8">
-          <div className="card shadow">
-            <div className="card-header bg-primary text-white">
-              <div className="d-flex justify-content-between align-items-center">
-                <h2 className="h4 mb-0">
-                  <i className="bi bi-tags me-2"></i>
-                  Category Management
-                </h2>
-                <button
-                  onClick={onBack}
-                  className="btn btn-outline-light"
-                >
-                  <i className="bi bi-arrow-left me-2"></i>
-                  Back to Announcements
-                </button>
+    <div className="h-100 d-flex flex-column">
+      <div className="container-fluid py-4 flex-grow-1 overflow-auto">
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-8">
+            <div className="card shadow">
+              <div className="card-header bg-primary text-white">
+                <div className="d-flex justify-content-between align-items-center">
+                  <h2 className="h4 mb-0">
+                    <i className="bi bi-tags me-2"></i>
+                    Category Management
+                  </h2>
+                  <button
+                    onClick={onBack}
+                    className="btn btn-outline-light"
+                  >
+                    <i className="bi bi-arrow-left me-2"></i>
+                    Back to Announcements
+                  </button>
+                </div>
               </div>
-            </div>
 
-            <div className="card-body">
+              <div className="card-body">
               {error && (
                 <div className="alert alert-danger" role="alert">
                   <i className="bi bi-exclamation-triangle me-2"></i>
@@ -243,6 +244,7 @@ export default function CategoryManagement({ onBack }: CategoryManagementProps) 
                   </table>
                 </div>
               )}
+              </div>
             </div>
           </div>
         </div>

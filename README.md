@@ -5,12 +5,15 @@ A full-stack web application for managing announcements with a modern, user-frie
 ## 🚀 Features
 
 - **CRUD Operations**: Create, read, update, and delete announcements
-- **Category Management**: Organize announcements with categories
+- **Category Management**: Organize announcements with categories (minimum 1 required)
 - **Advanced Search**: Unified search across titles, dates, and content
 - **Sorting**: Sort by title, publication date, and last update
 - **Responsive Design**: Modern Bootstrap UI with mobile support
 - **Real-time Validation**: Frontend and backend validation
 - **Interactive UI**: Smooth animations and hover effects
+- **Left Sidebar Navigation**: City header with announcements counter
+- **Custom Publication Dates**: Set custom publication dates for announcements
+- **Category Validation**: Enforce at least one category per announcement
 
 ## 🏗️ Architecture
 
@@ -149,33 +152,42 @@ DELETE /api/categories/:id         # Delete category
 - **Responsive Design**: Works on desktop and mobile devices
 
 ### Key Components
-- `LeftSidebar`: Navigation and city information
-- `AnnouncementList`: Main table with search and sort
-- `AnnouncementForm`: Create/edit announcements
-- `CategorySelect`: Category selection component
+- `LeftSidebar`: City header with gradient icon, announcements counter, and navigation menu
+- `AnnouncementList`: Main table with search, sort, and inline category editing
+- `AnnouncementForm`: Create/edit announcements with custom publication dates
+- `CategorySelect`: Multi-select category picker with Bootstrap styling
+- `AnnouncementDetails`: Detailed view with full announcement information
 
 ## 🔍 Usage
 
 ### Creating Announcements
-1. Click "New Announcement" or the yellow announcements card
+1. Click "New Announcement" or the yellow announcements card in the left sidebar
 2. Fill in required fields:
-   - Title (required)
-   - Content (required)
-   - Published Date (required)
-   - Categories (at least one required)
+   - **Title** (required): Announcement title
+   - **Content** (required): Full announcement content
+   - **Published Date** (required): Custom publication date and time
+   - **Categories** (at least one required): Select from available categories
 3. Click "Save" to create the announcement
 
 ### Managing Announcements
-- **Search**: Use the search bar to filter by title or dates
+- **Search**: Use the unified search bar to filter by title, published date, or updated date
 - **Sort**: Click column headers to sort by title, published date, or updated date
 - **Edit**: Click the pencil icon to edit an announcement
 - **Delete**: Click the trash icon to delete an announcement
 - **View**: Click the eye icon to view announcement details
+- **Category Management**: Edit categories directly in the table view
+
+### Left Sidebar Features
+- **City Header**: Displays city name with custom gradient icon
+- **Announcements Counter**: Shows total number of announcements
+- **Quick Actions**: Direct access to create new announcements
+- **Navigation Menu**: Additional menu items for future features
 
 ### Category Management
-- Categories are required for all announcements
-- Select multiple categories when creating/editing
-- Categories can be managed through the API
+- **Required Field**: At least one category must be selected for each announcement
+- **Multi-select**: Choose multiple categories when creating/editing
+- **Inline Editing**: Edit categories directly in the announcements table
+- **API Management**: Categories can be managed through the REST API
 
 ## 🛠️ Development
 
@@ -236,6 +248,36 @@ npm test             # Run frontend tests
 - `react-select`: Multi-select component
 - `vite`: Build tool
 
+## 🛠️ Technical Features
+
+### Frontend Architecture
+- **React 18**: Modern React with hooks and functional components
+- **TypeScript**: Full type safety across the application
+- **Vite**: Fast build tool and development server
+- **Bootstrap 5**: Modern CSS framework with custom components
+- **Axios**: HTTP client with interceptors and error handling
+
+### Backend Architecture
+- **Node.js + Express**: RESTful API server
+- **Prisma ORM**: Type-safe database operations
+- **PostgreSQL**: Relational database with migrations
+- **Docker**: Containerized database setup
+- **TypeScript**: End-to-end type safety
+
+### UI/UX Features
+- **Left Sidebar**: City header with gradient icon and navigation
+- **Responsive Design**: Mobile-first approach with Bootstrap
+- **Search & Sort**: Unified search with multi-column sorting
+- **Form Validation**: Real-time validation with user feedback
+- **Interactive Elements**: Hover effects and smooth animations
+- **Category Management**: Inline editing with multi-select
+
+### Data Validation
+- **Frontend Validation**: Real-time form validation
+- **Backend Validation**: Server-side data validation
+- **Required Fields**: Title, content, publication date, and categories
+- **Type Safety**: TypeScript interfaces for all data structures
+
 ## 🔒 Environment Variables
 
 ### Backend (.env)
@@ -281,13 +323,16 @@ If you encounter any issues or have questions, please:
 
 ## 🔮 Future Enhancements
 
-- User authentication and authorization
-- File upload support
-- Email notifications
-- Advanced filtering options
-- API documentation with Swagger
-- Mobile app development
-- Real-time updates with WebSockets
+- **User Authentication**: Login system with roles and permissions
+- **File Upload Support**: Attach images and documents to announcements
+- **Email Notifications**: Automated notifications for new announcements
+- **Advanced Filtering**: Date ranges, category filters, and status filters
+- **API Documentation**: Swagger/OpenAPI documentation
+- **Mobile App**: React Native mobile application
+- **Real-time Updates**: WebSocket integration for live updates
+- **Analytics Dashboard**: Statistics and insights for announcements
+- **Bulk Operations**: Mass edit and delete functionality
+- **Export Features**: PDF and Excel export capabilities
 
 ---
 

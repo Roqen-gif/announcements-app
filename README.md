@@ -94,9 +94,10 @@ DELETE /api/categories/:id         # Delete category
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js (v16 or higher)
-- npm or yarn
-- Docker (for PostgreSQL)
+- **Node.js** (v16 or higher) - [Download](https://nodejs.org/)
+- **npm** (comes with Node.js) or **yarn**
+- **Docker** (for PostgreSQL) - [Download](https://www.docker.com/)
+- **Git** - [Download](https://git-scm.com/)
 
 ### Installation
 
@@ -141,6 +142,190 @@ DELETE /api/categories/:id         # Delete category
    npm run dev
    # App will run on http://localhost:5173
    ```
+
+## 🖥️ Platform-Specific Instructions
+
+### Windows
+
+#### Prerequisites Installation
+1. **Node.js**: Download from [nodejs.org](https://nodejs.org/) and run installer
+2. **Docker Desktop**: Download from [docker.com](https://www.docker.com/products/docker-desktop/) and install
+3. **Git**: Download from [git-scm.com](https://git-scm.com/) and install
+
+#### Running the Project
+```cmd
+# Open Command Prompt or PowerShell
+cd C:\path\to\announcements-project
+
+# Backend setup
+cd announcements-backend
+npm install
+docker-compose up -d
+npx prisma migrate dev
+npx prisma db seed
+npm run dev
+
+# In new terminal window
+cd announcements-frontend
+npm install
+npm run dev
+```
+
+#### Troubleshooting Windows
+- **Docker issues**: Ensure Docker Desktop is running and WSL2 is enabled
+- **Port conflicts**: Check if ports 3000 and 5173 are available
+- **Permission errors**: Run Command Prompt as Administrator
+
+### macOS
+
+#### Prerequisites Installation
+1. **Node.js**: Use Homebrew or download from [nodejs.org](https://nodejs.org/)
+   ```bash
+   # Using Homebrew
+   brew install node
+   ```
+2. **Docker Desktop**: Download from [docker.com](https://www.docker.com/products/docker-desktop/)
+3. **Git**: Usually pre-installed, or install via Homebrew
+   ```bash
+   brew install git
+   ```
+
+#### Running the Project
+```bash
+# Open Terminal
+cd /path/to/announcements-project
+
+# Backend setup
+cd announcements-backend
+npm install
+docker-compose up -d
+npx prisma migrate dev
+npx prisma db seed
+npm run dev
+
+# In new terminal window
+cd announcements-frontend
+npm install
+npm run dev
+```
+
+#### Troubleshooting macOS
+- **Docker issues**: Ensure Docker Desktop is running
+- **Permission errors**: Use `sudo` if needed for global installations
+- **Port conflicts**: Use `lsof -i :3000` to check port usage
+
+### Linux (Ubuntu/Debian)
+
+#### Prerequisites Installation
+1. **Node.js**: Install via NodeSource repository
+   ```bash
+   # Install Node.js 18.x
+   curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+   sudo apt-get install -y nodejs
+   ```
+2. **Docker**: Install Docker Engine
+   ```bash
+   # Install Docker
+   sudo apt-get update
+   sudo apt-get install docker.io
+   sudo systemctl start docker
+   sudo systemctl enable docker
+   sudo usermod -aG docker $USER
+   ```
+3. **Git**: Install Git
+   ```bash
+   sudo apt-get install git
+   ```
+
+#### Running the Project
+```bash
+# Open Terminal
+cd /path/to/announcements-project
+
+# Backend setup
+cd announcements-backend
+npm install
+docker-compose up -d
+npx prisma migrate dev
+npx prisma db seed
+npm run dev
+
+# In new terminal window
+cd announcements-frontend
+npm install
+npm run dev
+```
+
+#### Troubleshooting Linux
+- **Docker permission**: Add user to docker group and logout/login
+- **Port conflicts**: Use `netstat -tulpn | grep :3000` to check ports
+- **Node.js issues**: Ensure npm is properly installed with Node.js
+
+### Alternative: Using Yarn
+
+If you prefer Yarn over npm:
+
+```bash
+# Install Yarn globally
+npm install -g yarn
+
+# Backend setup
+cd announcements-backend
+yarn install
+docker-compose up -d
+yarn prisma migrate dev
+yarn prisma db seed
+yarn dev
+
+# Frontend setup
+cd ../announcements-frontend
+yarn install
+yarn dev
+```
+
+### Docker Alternative (All Platforms)
+
+If you prefer to run everything in Docker:
+
+```bash
+# Create docker-compose.yml in project root
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: announcements
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./announcements-backend
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: "postgresql://postgres:password@postgres:5432/announcements"
+    depends_on:
+      - postgres
+
+  frontend:
+    build: ./announcements-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+```
+
+```bash
+# Run everything with Docker
+docker-compose up -d
+```
 
 ## 🎨 User Interface
 

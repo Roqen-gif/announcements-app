@@ -85,3 +85,41 @@
 .user-select-none {
   user-select: none !important;
 }
+
+/* Fix for react-select dropdown positioning */
+.react-select__menu {
+  z-index: 9999 !important;
+}
+
+/* Ensure dropdown doesn't get cut off */
+.react-select__menu-list {
+  max-height: 200px !important;
+  overflow-y: auto !important;
+}
+
+/* Better positioning for the dropdown */
+.react-select__menu--is-open {
+  z-index: 9999 !important;
+}
+
+/* Ensure the dropdown appears above other elements */
+.react-select-container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Fix table cell overflow for dropdowns */
+.table td {
+  overflow: visible !important;
+}
+
+/* Ensure table doesn't clip dropdowns */
+.table-responsive {
+  overflow: visible !important;
+}
+
+/* Specific fix for category editing cells */
+.table td:has(.react-select-container) {
+  overflow: visible !important;
+  position: relative;
+}

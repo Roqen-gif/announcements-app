@@ -3,9 +3,11 @@ import { useState } from "react";
 interface LeftSidebarProps {
   announcementsCount: number;
   onCreate: () => void;
+  onCategories: () => void;
+  onAllAnnouncements: () => void;
 }
 
-export default function LeftSidebar({ announcementsCount, onCreate }: LeftSidebarProps) {
+export default function LeftSidebar({ announcementsCount, onCreate, onCategories, onAllAnnouncements }: LeftSidebarProps) {
   const [cityName, setCityName] = useState("Test City");
 
   return (
@@ -112,16 +114,22 @@ export default function LeftSidebar({ announcementsCount, onCreate }: LeftSideba
         <div className="list-group list-group-flush">
           <button 
             className="list-group-item list-group-item-action border-0 bg-transparent d-flex align-items-center py-2"
+            onClick={onAllAnnouncements}
+          >
+            <i className="bi bi-list-ul me-2 text-secondary"></i>
+            <span>All Announcements</span>
+          </button>
+          <button 
+            className="list-group-item list-group-item-action border-0 bg-transparent d-flex align-items-center py-2"
             onClick={onCreate}
           >
             <i className="bi bi-plus-circle me-2 text-primary"></i>
             <span>New Announcement</span>
           </button>
-          <button className="list-group-item list-group-item-action border-0 bg-transparent d-flex align-items-center py-2">
-            <i className="bi bi-list-ul me-2 text-secondary"></i>
-            <span>All Announcements</span>
-          </button>
-          <button className="list-group-item list-group-item-action border-0 bg-transparent d-flex align-items-center py-2">
+          <button 
+            className="list-group-item list-group-item-action border-0 bg-transparent d-flex align-items-center py-2"
+            onClick={onCategories}
+          >
             <i className="bi bi-tags me-2 text-info"></i>
             <span>Categories</span>
           </button>

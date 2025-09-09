@@ -398,27 +398,29 @@ export default function AnnouncementList({
                   </td>
                   <td>
                     {editingId === announcement.id.toString() ? (
-                      <div className="d-flex align-items-center gap-2">
-                        <div style={{ minWidth: '200px' }}>
-                <CategorySelect
+                      <div className="d-flex align-items-start gap-2" style={{ minHeight: '60px', position: 'relative', zIndex: 10 }}>
+                        <div style={{ minWidth: '250px', position: 'relative', zIndex: 11 }}>
+                          <CategorySelect
                             value={editingCategories}
                             onChange={setEditingCategories}
                           />
                         </div>
-                        <button
-                          onClick={() => handleCategorySave(announcement.id)}
-                          className="btn btn-sm btn-success"
-                          title="Save categories"
-                        >
-                          <i className="bi bi-check"></i>
-                        </button>
-                        <button
-                          onClick={handleCategoryCancel}
-                          className="btn btn-sm btn-secondary"
-                          title="Cancel"
-                        >
-                          <i className="bi bi-x"></i>
-                        </button>
+                        <div className="d-flex flex-column gap-1">
+                          <button
+                            onClick={() => handleCategorySave(announcement.id)}
+                            className="btn btn-sm btn-success"
+                            title="Save categories"
+                          >
+                            <i className="bi bi-check"></i>
+                          </button>
+                          <button
+                            onClick={handleCategoryCancel}
+                            className="btn btn-sm btn-secondary"
+                            title="Cancel"
+                          >
+                            <i className="bi bi-x"></i>
+                          </button>
+                        </div>
                       </div>
                     ) : (
                       <div className="d-flex align-items-center gap-2">

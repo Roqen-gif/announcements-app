@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import LeftSidebar from "./components/LeftSidebar";
 import AnnouncementList from "./components/AnnouncementList";
 import AnnouncementForm from "./components/AnnouncementForm";
+import CategoryManagement from "./components/CategoryManagement";
 import { getAnnouncements, getAnnouncement, createAnnouncement, updateAnnouncement, deleteAnnouncement } from "./services/api";
 import type { Announcement } from "./types";
 
@@ -9,7 +10,7 @@ function App() {
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [view, setView] = useState<"list" | "form" | "details">("list");
+  const [view, setView] = useState<"list" | "form" | "details" | "categories">("list");
   const [current, setCurrent] = useState<Announcement | null>(null);
   const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement | null>(null);
 
@@ -95,6 +96,14 @@ function App() {
     setSelectedAnnouncement(null);
   };
 
+  const handleCategories = () => {
+    setView("categories");
+  };
+
+  const handleAllAnnouncements = () => {
+    setView("list");
+  };
+
   if (loading) {
     return (
       <div className="vh-100 d-flex align-items-center justify-content-center bg-light">
@@ -132,6 +141,8 @@ function App() {
       <LeftSidebar 
         announcementsCount={announcements.length}
         onCreate={handleCreate}
+        onCategories={handleCategories}
+        onAllAnnouncements={handleAllAnnouncements}
       />
 
       {/* Main Content */}
@@ -245,6 +256,9 @@ function App() {
                 </div>
               </div>
             ) : null}
+            {view === "categories" && (
+              <CategoryManagement onBack={handleBackToList} />
+            )}
           </div>
         </main>
       </div>

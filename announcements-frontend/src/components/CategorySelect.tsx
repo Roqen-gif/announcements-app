@@ -31,7 +31,11 @@ export default function CategorySelect({ value, onChange }: CategorySelectProps)
     }
   };
 
-  const options = categories.map(category => ({
+  // Filter out already selected categories
+  const selectedIds = value.map(cat => cat.id);
+  const availableCategories = categories.filter(category => !selectedIds.includes(category.id));
+  
+  const options = availableCategories.map(category => ({
     value: category,
     label: category.name
   }));
@@ -65,40 +69,55 @@ export default function CategorySelect({ value, onChange }: CategorySelectProps)
   }
 
   return (
-    <Select
-      isMulti
-      options={options}
-      value={selectedOptions}
-      onChange={handleChange}
-      placeholder="Select categories..."
-      className="react-select-container"
-      classNamePrefix="react-select"
-      styles={{
-        control: (provided) => ({
-          ...provided,
-          minHeight: '38px',
-          border: '1px solid #ced4da',
-          borderRadius: '0.375rem',
-        }),
-        multiValue: (provided) => ({
-          ...provided,
-          backgroundColor: '#e7f3ff',
-          borderRadius: '0.25rem',
-        }),
-        multiValueLabel: (provided) => ({
-          ...provided,
-          color: '#0d6efd',
-          fontSize: '0.875rem',
-        }),
-        multiValueRemove: (provided) => ({
-          ...provided,
-          color: '#0d6efd',
-          '&:hover': {
-            backgroundColor: '#0d6efd',
-            color: 'white',
-          },
-        }),
-      }}
-    />
+    <div>
+      <Select
+        isMulti
+        options={options}
+        value={selectedOptions}
+        onChange={handleChange}
+        placeholder={availableCategories.length === 0 ? "All categories selected" : "Select categories..."}
+        className="react-select-container"
+        classNamePrefix="react-select"
+        menuPlacement="auto"
+        maxMenuHeight={200}
+        isDisabled={availableCategories.length === 0}
+        styles={{
+          control: (provided) => ({
+            ...provided,
+            minHeight: '38px',
+            border: '1px solid #ced4da',
+            borderRadius: '0.375rem',
+          }),
+          menu: (provided) => ({
+            ...provided,
+            zIndex: 9999,
+          }),
+          multiValue: (provided) => ({
+            ...provided,
+            backgroundColor: '#e7f3ff',
+            borderRadius: '0.25rem',
+          }),
+          multiValueLabel: (provided) => ({
+            ...provided,
+            color: '#0d6efd',
+            fontSize: '0.875rem',
+          }),
+          multiValueRemove: (provided) => ({
+            ...provided,
+            color: '#0d6efd',
+            '&:hover': {
+              backgroundColor: '#0d6efd',
+              color: 'white',
+            },
+          }),
+        }}
+      />
+      {availableCategories.length === 0 && categories.length > 0 && (
+        <div className="form-text text-muted">
+          <i className="bi bi-info-circle me-1"></i>
+          All available categories have been selected
+        </div>
+      )}
+    </div>
   );
 }

@@ -1,0 +1,87 @@
+/* Custom styles for the announcements app */
+
+/* Ensure the table header stays sticky */
+.table-responsive .sticky-top {
+  position: sticky !important;
+  top: 0;
+  z-index: 10;
+}
+
+/* Custom scrollbar for the table */
+.table-responsive::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Ensure proper spacing for the main layout */
+.vh-100 {
+  height: 100vh !important;
+}
+
+/* Custom styles for react-select to match Bootstrap */
+.react-select-container .react-select__control {
+  border: 1px solid #ced4da !important;
+  border-radius: 0.375rem !important;
+  min-height: 38px !important;
+}
+
+.react-select-container .react-select__control:hover {
+  border-color: #86b7fe !important;
+}
+
+.react-select-container .react-select__control--is-focused {
+  border-color: #86b7fe !important;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+}
+
+.react-select-container .react-select__multi-value {
+  background-color: #e7f3ff !important;
+  border-radius: 0.25rem !important;
+}
+
+.react-select-container .react-select__multi-value__label {
+  color: #0d6efd !important;
+  font-size: 0.875rem !important;
+}
+
+.react-select-container .react-select__multi-value__remove {
+  color: #0d6efd !important;
+}
+
+.react-select-container .react-select__multi-value__remove:hover {
+  background-color: #0d6efd !important;
+  color: white !important;
+}
+
+/* Ensure proper font family for monospace elements */
+.font-monospace {
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
+/* Cursor pointer for sortable headers */
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+.cursor-pointer:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* User select none for sortable headers */
+.user-select-none {
+  user-select: none !important;
+}

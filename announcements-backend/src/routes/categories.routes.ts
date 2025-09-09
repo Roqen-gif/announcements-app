@@ -1,5 +1,5 @@
 import { Router } from "express";
-import * as controller from "../controllers/announcements.controller";
+import * as controller from "../controllers/categories.controller";
 
 const router = Router();
 
@@ -8,5 +8,5 @@ router.get("/:id", controller.getOne);
 router.post("/", controller.create);
 router.put("/:id", controller.update);
 router.delete("/:id", controller.remove);
-router.patch("/:id", controller.updateCategories);
+
 export default router;

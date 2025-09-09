@@ -6,13 +6,14 @@ const prisma = new PrismaClient();
 interface CreateAnnouncementData {
   title: string;
   content?: string;
+  publishedDate?: string;
   categories?: number[];
 }
 
 interface UpdateAnnouncementData {
   title?: string;
   content?: string;
-  publicationDate?: Date;
+  publishedDate?: string;
   categories?: number[];
 }
 
@@ -48,13 +49,21 @@ export const getAnnouncementById = async (id: number) => {
 export const createAnnouncement = async ({
   title,
   content = "",
+  publishedDate,
   categories = [],
 }: CreateAnnouncementData) => {
   if (!title) {
     throw new Error("Title is required to create an announcement");
   }
 
+  if (!categories || categories.length === 0) {
+    throw new Error("At least one category is required to create an announcement");
+  }
+
   const linkSlug = generateSlug(title);
+  
+  // Встановлюємо дату публікації
+  const publicationDate = publishedDate ? new Date(publishedDate) : new Date();
 
   const categoryConnections = Array.isArray(categories)
     ? categories.map((catId) => ({ id: catId }))
@@ -64,7 +73,7 @@ export const createAnnouncement = async ({
     data: {
       title,
       content,
-      publicationDate: new Date(),
+      publicationDate,
       lastUpdate: new Date(),
       linkSlug,
       categories: {
@@ -78,8 +87,13 @@ export const createAnnouncement = async ({
 // Оновити анонс
 export const updateAnnouncement = async (
   id: number,
-  { title, content, publicationDate, categories }: UpdateAnnouncementData
+  { title, content, publishedDate, categories }: UpdateAnnouncementData
 ) => {
+  // Перевіряємо, чи передані категорії і чи не порожній масив
+  if (categories && categories.length === 0) {
+    throw new Error("At least one category is required to update an announcement");
+  }
+
   const data: any = {
     lastUpdate: new Date(),
   };
@@ -89,7 +103,7 @@ export const updateAnnouncement = async (
     data.linkSlug = generateSlug(title);
   }
   if (content !== undefined) data.content = content;
-  if (publicationDate) data.publicationDate = publicationDate;
+  if (publishedDate) data.publicationDate = new Date(publishedDate);
   if (categories) {
     data.categories = {
       set: categories.length > 0 ? categories.map((catId) => ({ id: catId })) : [],

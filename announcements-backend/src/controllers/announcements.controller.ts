@@ -33,12 +33,13 @@ export const create = async (req: Request, res: Response) => {
   try {
     console.log("req.body:", req.body); // лог для дебагу
 
-    const { title, content, categories } = req.body;
+    const { title, content, publishedDate, categories } = req.body;
 
-    // Виклик сервісу з об’єктом
+    // Виклик сервісу з об'єктом
     const newAnnouncement = await service.createAnnouncement({
       title,
       content,
+      publishedDate,
       categories,
     });
 
@@ -46,7 +47,8 @@ export const create = async (req: Request, res: Response) => {
   } catch (error: any) {
     console.error(error);
 
-    if (error.message.includes("Title is required")) {
+    if (error.message.includes("Title is required") || 
+        error.message.includes("At least one category is required")) {
       return res.status(400).json({ message: error.message });
     }
 
@@ -60,18 +62,23 @@ export const update = async (req: Request, res: Response) => {
     const id = Number(req.params.id);
     if (isNaN(id)) return res.status(400).json({ message: "Invalid ID" });
 
-    const { title, content, publicationDate, categories } = req.body;
+    const { title, content, publishedDate, categories } = req.body;
 
     const updated = await service.updateAnnouncement(id, {
       title,
       content,
-      publicationDate,
+      publishedDate,
       categories,
     });
 
     res.json(updated);
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
+
+    if (error.message.includes("At least one category is required")) {
+      return res.status(400).json({ message: error.message });
+    }
+
     res.status(500).json({ message: "Error updating announcement" });
   }
 };

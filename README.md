@@ -1,260 +1,294 @@
-# Announcements Management System
+# 📢 Announcements Management System
 
-A full-stack web application for managing announcements with categories, built with React, Node.js, Express, TypeScript, and PostgreSQL.
+A full-stack web application for managing announcements with a modern, user-friendly interface. Built with Node.js, React, TypeScript, and PostgreSQL.
 
 ## 🚀 Features
 
 - **CRUD Operations**: Create, read, update, and delete announcements
-- **Category Management**: Assign multiple categories to announcements
-- **Modern UI**: Clean, responsive interface with Tailwind CSS
-- **Real-time Updates**: Live category updates without page refresh
-- **Error Handling**: Comprehensive error handling and user feedback
-- **Type Safety**: Full TypeScript support for both frontend and backend
+- **Category Management**: Organize announcements with categories
+- **Advanced Search**: Unified search across titles, dates, and content
+- **Sorting**: Sort by title, publication date, and last update
+- **Responsive Design**: Modern Bootstrap UI with mobile support
+- **Real-time Validation**: Frontend and backend validation
+- **Interactive UI**: Smooth animations and hover effects
 
-## 🛠️ Tech Stack
+## 🏗️ Architecture
 
 ### Backend
-- **Node.js** with **Express.js**
-- **TypeScript** for type safety
-- **Prisma** as ORM
-- **PostgreSQL** database
-- **Docker** for database containerization
-- **CORS** enabled for frontend communication
+- **Framework**: Node.js + Express + TypeScript
+- **Database**: PostgreSQL with Prisma ORM
+- **Port**: `http://localhost:3000`
+- **API**: RESTful endpoints
 
 ### Frontend
-- **React 19** with **TypeScript**
-- **Vite** for fast development and building
-- **Tailwind CSS** for styling
-- **React Select** for multi-select categories
-- **Axios** for API communication
-
-## 📋 Prerequisites
-
-- Node.js (v18 or higher)
-- Docker and Docker Compose
-- npm or yarn
-
-## 🚀 Quick Start
-
-### 1. Clone the Repository
-```bash
-git clone <repository-url>
-cd NodeJS_Project
-```
-
-### 2. Start the Database
-```bash
-cd announcements-backend
-docker-compose up -d
-```
-
-### 3. Set Up Backend
-```bash
-cd announcements-backend
-
-# Install dependencies
-npm install
-
-# Set up environment variables
-echo DATABASE_URL="postgresql://postgres:postgres@localhost:5432/announcements_db" > .env
-echo PORT=3000 >> .env
-
-# Run database migrations
-npx prisma migrate dev
-
-# Generate Prisma client
-npx prisma generate
-
-# Seed the database
-npm run seed
-
-# Start the backend server
-npm run dev
-```
-
-### 4. Set Up Frontend
-```bash
-cd announcements-frontend
-
-# Install dependencies
-npm install
-
-# Set up environment variables
-echo VITE_API_URL=http://localhost:3000 > .env
-
-# Start the frontend development server
-npm run dev
-```
-
-### 5. Access the Application
-- **Frontend**: http://localhost:5173
-- **Backend API**: http://localhost:3000
-- **Database Admin (pgAdmin)**: http://localhost:5050
-  - Email: admin@admin.com
-  - Password: admin
+- **Framework**: React + TypeScript + Vite
+- **UI Library**: Bootstrap 5 + Bootstrap Icons
+- **Port**: `http://localhost:5173` or `http://localhost:5174`
+- **HTTP Client**: Axios
 
 ## 📁 Project Structure
 
 ```
-NodeJS_Project/
-├── announcements-backend/
+announcements-project/
+├── announcements-backend/          # Backend API
 │   ├── src/
-│   │   ├── controllers/     # Route controllers
-│   │   ├── services/        # Business logic
-│   │   ├── routes/          # API routes
-│   │   ├── validators/      # Input validation
-│   │   ├── utils/           # Utility functions
-│   │   ├── app.ts           # Express app configuration
-│   │   ├── server.ts        # Server startup
-│   │   └── index.ts         # Entry point
-│   ├── prisma/
-│   │   ├── schema.prisma    # Database schema
-│   │   ├── migrations/      # Database migrations
-│   │   └── seed.ts          # Database seeding
-│   ├── docker-compose.yml   # Database services
-│   └── package.json
-├── announcements-frontend/
+│   │   ├── controllers/           # Request handlers
+│   │   ├── services/              # Business logic
+│   │   ├── routes/                # API routes
+│   │   ├── validators/            # Input validation
+│   │   └── utils/                 # Helper functions
+│   ├── prisma/                    # Database schema & migrations
+│   └── docker-compose.yml         # Database setup
+├── announcements-frontend/         # Frontend React app
 │   ├── src/
-│   │   ├── components/      # React components
-│   │   ├── services/        # API services
-│   │   ├── App.tsx          # Main app component
-│   │   └── main.tsx         # Entry point
-│   └── package.json
+│   │   ├── components/            # React components
+│   │   ├── services/              # API calls
+│   │   └── types/                 # TypeScript interfaces
+│   └── public/                    # Static assets
 └── README.md
 ```
 
 ## 🗄️ Database Schema
 
 ### Announcements Table
-- `id`: Primary key (auto-increment)
-- `title`: Announcement title
-- `content`: Announcement content
-- `publicationDate`: Publication date
-- `lastUpdate`: Last update timestamp
-- `linkSlug`: URL-friendly slug
+```sql
+- id (Primary Key, Auto-increment)
+- title (String, Required)
+- content (Text)
+- publicationDate (DateTime)
+- lastUpdate (DateTime, Auto-updated)
+- linkSlug (String, Auto-generated from title)
+```
 
 ### Categories Table
-- `id`: Primary key (auto-increment)
-- `name`: Category name (unique)
+```sql
+- id (Primary Key, Auto-increment)
+- name (String, Unique)
+```
 
 ### Many-to-Many Relationship
-- Announcements can have multiple categories
-- Categories can be assigned to multiple announcements
+- `Announcement` ↔ `Category` (via junction table)
 
 ## 🔧 API Endpoints
 
 ### Announcements
-- `GET /announcements` - Get all announcements
-- `GET /announcements/:id` - Get announcement by ID
-- `POST /announcements` - Create new announcement
-- `PUT /announcements/:id` - Update announcement
-- `PATCH /announcements/:id` - Update announcement categories
-- `DELETE /announcements/:id` - Delete announcement
+```
+GET    /api/announcements          # Get all announcements
+GET    /api/announcements/:id      # Get single announcement
+POST   /api/announcements          # Create announcement
+PUT    /api/announcements/:id      # Update announcement
+DELETE /api/announcements/:id      # Delete announcement
+```
 
 ### Categories
-- `GET /categories` - Get all categories
-- `GET /categories/:id` - Get category by ID
-- `POST /categories` - Create new category
-- `PUT /categories/:id` - Update category
-- `DELETE /categories/:id` - Delete category
+```
+GET    /api/categories             # Get all categories
+POST   /api/categories             # Create category
+PUT    /api/categories/:id         # Update category
+DELETE /api/categories/:id         # Delete category
+```
 
-## 🎨 Frontend Features
+## 🚀 Getting Started
 
-### Announcement List
-- View all announcements in a table format
-- Real-time category updates
-- Search and filter capabilities
-- Responsive design
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn
+- Docker (for PostgreSQL)
 
-### Announcement Form
-- Create new announcements
-- Edit existing announcements
-- Multi-select category assignment
-- Form validation and error handling
+### Installation
 
-### Announcement Details
-- View full announcement content
-- Display categories as tags
-- Edit and delete actions
-- Publication and update dates
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd announcements-project
+   ```
 
-## 🐛 Troubleshooting
+2. **Setup Backend**
+   ```bash
+   cd announcements-backend
+   npm install
+   ```
 
-### Common Issues
+3. **Setup Database**
+   ```bash
+   # Start PostgreSQL with Docker
+   docker-compose up -d
+   
+   # Run database migrations
+   npx prisma migrate dev
+   
+   # Seed the database with sample data
+   npx prisma db seed
+   ```
 
-1. **Database Connection Error**
-   - Ensure Docker is running
-   - Check if PostgreSQL container is up: `docker ps`
-   - Verify DATABASE_URL in .env file
+4. **Start Backend Server**
+   ```bash
+   npm run dev
+   # Server will run on http://localhost:3000
+   ```
 
-2. **CORS Errors**
-   - Ensure backend is running on port 3000
-   - Check CORS configuration in app.ts
-   - Verify frontend is running on port 5173
+5. **Setup Frontend**
+   ```bash
+   cd ../announcements-frontend
+   npm install
+   ```
 
-3. **Prisma Client Not Generated**
-   - Run `npx prisma generate`
-   - Ensure database is accessible
+6. **Start Frontend Development Server**
+   ```bash
+   npm run dev
+   # App will run on http://localhost:5173
+   ```
 
-4. **Frontend Build Errors**
-   - Clear node_modules and reinstall: `rm -rf node_modules && npm install`
-   - Check TypeScript errors: `npm run lint`
+## 🎨 User Interface
 
-### Development Commands
+### Main Features
+- **Left Sidebar**: City header with announcements counter
+- **Announcements List**: Sortable table with search functionality
+- **Create/Edit Form**: Comprehensive form with validation
+- **Category Management**: Multi-select category picker
+- **Responsive Design**: Works on desktop and mobile devices
 
+### Key Components
+- `LeftSidebar`: Navigation and city information
+- `AnnouncementList`: Main table with search and sort
+- `AnnouncementForm`: Create/edit announcements
+- `CategorySelect`: Category selection component
+
+## 🔍 Usage
+
+### Creating Announcements
+1. Click "New Announcement" or the yellow announcements card
+2. Fill in required fields:
+   - Title (required)
+   - Content (required)
+   - Published Date (required)
+   - Categories (at least one required)
+3. Click "Save" to create the announcement
+
+### Managing Announcements
+- **Search**: Use the search bar to filter by title or dates
+- **Sort**: Click column headers to sort by title, published date, or updated date
+- **Edit**: Click the pencil icon to edit an announcement
+- **Delete**: Click the trash icon to delete an announcement
+- **View**: Click the eye icon to view announcement details
+
+### Category Management
+- Categories are required for all announcements
+- Select multiple categories when creating/editing
+- Categories can be managed through the API
+
+## 🛠️ Development
+
+### Backend Development
 ```bash
-# Backend
+cd announcements-backend
 npm run dev          # Start development server
 npm run build        # Build for production
 npm run start        # Start production server
-npm run lint         # Run ESLint
+```
 
-# Frontend
+### Frontend Development
+```bash
+cd announcements-frontend
 npm run dev          # Start development server
 npm run build        # Build for production
 npm run preview      # Preview production build
-npm run lint         # Run ESLint
-
-# Database
-npx prisma migrate dev    # Run migrations
-npx prisma generate       # Generate Prisma client
-npx prisma studio         # Open Prisma Studio
-npm run seed              # Seed database
 ```
 
-## 📝 Environment Variables
+### Database Management
+```bash
+# Reset database
+npx prisma migrate reset
+
+# Generate Prisma client
+npx prisma generate
+
+# View database in Prisma Studio
+npx prisma studio
+```
+
+## 🧪 Testing
+
+### Backend Testing
+```bash
+cd announcements-backend
+npm test             # Run backend tests
+```
+
+### Frontend Testing
+```bash
+cd announcements-frontend
+npm test             # Run frontend tests
+```
+
+## 📦 Dependencies
+
+### Backend
+- `express`: Web framework
+- `prisma`: Database ORM
+- `cors`: Cross-origin resource sharing
+- `typescript`: Type safety
+
+### Frontend
+- `react`: UI library
+- `bootstrap`: CSS framework
+- `axios`: HTTP client
+- `react-select`: Multi-select component
+- `vite`: Build tool
+
+## 🔒 Environment Variables
 
 ### Backend (.env)
-```
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/announcements_db"
+```env
+DATABASE_URL="postgresql://username:password@localhost:5432/announcements"
 PORT=3000
 ```
 
 ### Frontend (.env)
+```env
+VITE_API_URL=http://localhost:3000/api
 ```
-VITE_API_URL=http://localhost:3000
-```
+
+## 🚀 Deployment
+
+### Backend Deployment
+1. Build the application: `npm run build`
+2. Set environment variables
+3. Deploy to your preferred platform (Heroku, AWS, etc.)
+
+### Frontend Deployment
+1. Build the application: `npm run build`
+2. Deploy the `dist` folder to a static hosting service (Netlify, Vercel, etc.)
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
+2. Create a feature branch: `git checkout -b feature-name`
+3. Commit changes: `git commit -m 'Add feature'`
+4. Push to branch: `git push origin feature-name`
 5. Submit a pull request
 
-## 📄 License
+## 📝 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## 🆘 Support
 
 If you encounter any issues or have questions, please:
-1. Check the troubleshooting section
-2. Review the console logs for errors
-3. Ensure all services are running correctly
-4. Create an issue in the repository
+1. Check the existing issues
+2. Create a new issue with detailed description
+3. Contact the development team
+
+## 🔮 Future Enhancements
+
+- User authentication and authorization
+- File upload support
+- Email notifications
+- Advanced filtering options
+- API documentation with Swagger
+- Mobile app development
+- Real-time updates with WebSockets
 
 ---
 
-**Happy coding! 🎉**
+**Built with ❤️ using modern web technologies**

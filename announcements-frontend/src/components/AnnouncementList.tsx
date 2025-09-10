@@ -340,9 +340,9 @@ export default function AnnouncementList({
 
       {/* Table Container with Scroll */}
       <div className="flex-grow-1 overflow-auto">
-        <div className="table-responsive">
-          <table className="table table-hover">
-            <thead className="table-light sticky-top">
+        <div className="table-responsive" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+          <table className="table table-hover mb-0">
+            <thead className="table-light" style={{ position: 'sticky', top: 0, zIndex: 10, backgroundColor: '#f8f9fa' }}>
               <tr>
                 <th 
                   className="border-0 cursor-pointer user-select-none" 

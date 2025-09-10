@@ -1,10 +1,22 @@
 /* Custom styles for the announcements app */
 
 /* Ensure the table header stays sticky */
-.table-responsive .sticky-top {
+.table-responsive thead {
   position: sticky !important;
-  top: 0;
-  z-index: 10;
+  top: 0 !important;
+  z-index: 10 !important;
+  background-color: #f8f9fa !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+/* Ensure table header cells have proper spacing */
+.table-responsive thead th {
+  padding: 0.75rem !important;
+  vertical-align: middle !important;
+  border-bottom: 2px solid #dee2e6 !important;
+  background-color: #f8f9fa !important;
+  position: sticky !important;
+  top: 0 !important;
 }
 
 /* Custom scrollbar for the table */
@@ -122,4 +134,32 @@
 .table td:has(.react-select-container) {
   overflow: visible !important;
   position: relative;
+}
+
+/* Ensure proper spacing between sticky header and content */
+.table tbody tr:first-child td {
+  padding-top: 1rem !important;
+}
+
+/* Better visual separation for sticky header */
+.table-responsive {
+  border: 1px solid #dee2e6 !important;
+  border-radius: 0.375rem !important;
+  overflow: auto !important;
+  max-height: calc(100vh - 200px) !important;
+}
+
+/* Ensure sticky header is always visible */
+.table-responsive thead tr {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10 !important;
+  background-color: #f8f9fa !important;
+}
+
+/* Make sure header text is always visible */
+.table-responsive thead th {
+  color: #212529 !important;
+  font-weight: 600 !important;
+  text-shadow: none !important;
 }

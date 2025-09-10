@@ -19,25 +19,25 @@ interface UpdateAnnouncementData {
 
 // -------------------- HELPERS --------------------
 
-// Генерація чистого slug
+// Generate clean slug
 const generateSlug = (title: string) => {
   return title
-    .trim()                     // прибираємо пробіли на початку/кінці
-    .replace(/\s+/g, "-")       // пробіли → дефіси
-    .replace(/[^\w\-]+/g, "")   // видаляємо спецсимволи
+    .trim()                     // remove spaces at start/end
+    .replace(/\s+/g, "-")       // spaces → hyphens
+    .replace(/[^\w\-]+/g, "")   // remove special characters
     .toLowerCase();
 };
 
 // -------------------- SERVICES --------------------
 
-// Отримати всі анонси з категоріями
+// Get all announcements with categories
 export const getAllAnnouncements = async () => {
   return prisma.announcement.findMany({
     include: { categories: true },
   });
 };
 
-// Отримати анонс за ID
+// Get announcement by ID
 export const getAnnouncementById = async (id: number) => {
   return prisma.announcement.findUnique({
     where: { id },
@@ -45,7 +45,7 @@ export const getAnnouncementById = async (id: number) => {
   });
 };
 
-// Створити новий анонс
+// Create new announcement
 export const createAnnouncement = async ({
   title,
   content = "",
@@ -62,7 +62,7 @@ export const createAnnouncement = async ({
 
   const linkSlug = generateSlug(title);
   
-  // Встановлюємо дату публікації
+  // Set publication date
   const publicationDate = publishedDate ? new Date(publishedDate) : new Date();
 
   const categoryConnections = Array.isArray(categories)
@@ -80,16 +80,16 @@ export const createAnnouncement = async ({
         connect: categoryConnections,
       },
     },
-    include: { categories: true }, // <-- підвантажуємо категорії
+    include: { categories: true }, // <-- load categories
   });
 };
 
-// Оновити анонс
+// Update announcement
 export const updateAnnouncement = async (
   id: number,
   { title, content, publishedDate, categories }: UpdateAnnouncementData
 ) => {
-  // Перевіряємо, чи передані категорії і чи не порожній масив
+  // Check if categories are provided and not empty array
   if (categories && categories.length === 0) {
     throw new Error("At least one category is required to update an announcement");
   }
@@ -113,11 +113,11 @@ export const updateAnnouncement = async (
   return prisma.announcement.update({
     where: { id },
     data,
-    include: { categories: true }, // <-- підвантажуємо категорії
+    include: { categories: true }, // <-- load categories
   });
 };
 
-// Видалити анонс
+// Delete announcement
 export const deleteAnnouncement = async (id: number) => {
   return prisma.announcement.delete({
     where: { id },

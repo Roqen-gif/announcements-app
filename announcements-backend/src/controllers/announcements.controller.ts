@@ -31,11 +31,11 @@ export const getOne = async (req: Request, res: Response) => {
 // -------------------- CREATE --------------------
 export const create = async (req: Request, res: Response) => {
   try {
-    console.log("req.body:", req.body); // лог для дебагу
+    console.log("req.body:", req.body); // debug log
 
     const { title, content, publishedDate, categories } = req.body;
 
-    // Виклик сервісу з об'єктом
+    // Call service with object
     const newAnnouncement = await service.createAnnouncement({
       title,
       content,
@@ -86,7 +86,7 @@ export const update = async (req: Request, res: Response) => {
 export const updateCategories = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
-    const { categories } = req.body; // масив ID категорій
+    const { categories } = req.body; // array of category IDs
 
     if (isNaN(id)) return res.status(400).json({ message: "Invalid ID" });
 

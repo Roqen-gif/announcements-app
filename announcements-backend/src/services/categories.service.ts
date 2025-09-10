@@ -9,14 +9,14 @@ interface CreateCategoryData {
 
 // -------------------- SERVICES --------------------
 
-// Отримати всі категорії
+// Get all categories
 export const getAllCategories = async () => {
   return prisma.category.findMany({
-    include: { announcements: true }, // можна включити анонси
+    include: { announcements: true }, // can include announcements
   });
 };
 
-// Отримати категорію за ID
+// Get category by ID
 export const getCategoryById = async (id: number) => {
   return prisma.category.findUnique({
     where: { id },
@@ -24,7 +24,7 @@ export const getCategoryById = async (id: number) => {
   });
 };
 
-// Створити нову категорію
+// Create new category
 export const createCategory = async ({ name }: CreateCategoryData) => {
   if (!name) throw new Error("Category name is required");
 
@@ -33,7 +33,7 @@ export const createCategory = async ({ name }: CreateCategoryData) => {
   });
 };
 
-// Оновити категорію
+// Update category
 export const updateCategory = async (id: number, name: string) => {
   if (!name) throw new Error("Category name is required");
 
@@ -43,7 +43,7 @@ export const updateCategory = async (id: number, name: string) => {
   });
 };
 
-// Видалити категорію
+// Delete category
 export const deleteCategory = async (id: number) => {
   return prisma.category.delete({
     where: { id },

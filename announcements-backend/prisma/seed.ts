@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  // Додаємо категорії
+  // Add categories
   const categories = await prisma.category.createMany({
     data: [
       { name: "Community Events" },
@@ -25,11 +25,11 @@ async function main() {
     skipDuplicates: true,
   });
 
-  // Отримуємо створені категорії для зв'язків
+  // Get created categories for relationships
   const categoryList = await prisma.category.findMany();
   const categoryMap = new Map(categoryList.map(cat => [cat.name, cat.id]));
 
-  // Додаємо приклади анонсів
+  // Add sample announcements
   const announcements = await prisma.announcement.createMany({
     data: [
       {
@@ -126,10 +126,10 @@ async function main() {
     skipDuplicates: true,
   });
 
-  // Отримуємо створені анонси для зв'язків з категоріями
+  // Get created announcements for category relationships
   const announcementList = await prisma.announcement.findMany();
   
-  // Додаємо зв'язки між анонсами та категоріями
+  // Add relationships between announcements and categories
   const announcementCategories = [
     // Spring Festival
     { announcementId: announcementList[0].id, categoryId: categoryMap.get("Community Events") },
@@ -188,7 +188,7 @@ async function main() {
     { announcementId: announcementList[14].id, categoryId: categoryMap.get("Crime & Safety") },
   ];
 
-  // Створюємо зв'язки
+  // Create relationships
   for (const ac of announcementCategories) {
     if (ac.announcementId && ac.categoryId) {
       await prisma.announcement.update({
